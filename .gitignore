@@ -5,6 +5,4 @@ npm-debug.log
 package-lock.json
 output.md
 output/
-lib/
-lib-doc/
 .DS_Store
