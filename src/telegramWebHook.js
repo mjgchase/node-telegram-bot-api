@@ -1,9 +1,11 @@
-const errors = require('./errors');
-const debug = require('debug')('node-telegram-bot-api');
-const https = require('https');
-const http = require('http');
-const fs = require('fs');
-const bl = require('bl');
+import * as errors from './errors.js';
+import debugModule from 'debug';
+import https from 'https';
+import http from 'http';
+import fs from 'fs';
+import bl from 'bl';
+
+const debug = debugModule('node-telegram-bot-api');
 
 class TelegramBotWebHook {
   /**
@@ -23,7 +25,6 @@ class TelegramBotWebHook {
     this._open = false;
     this._requestListener = this._requestListener.bind(this);
     this._parseBody = this._parseBody.bind(this);
-
     if (this.options.key && this.options.cert) {
       debug('HTTPS WebHook enabled (by key/cert)');
       this.options.https.key = fs.readFileSync(this.options.key);
@@ -56,7 +57,6 @@ class TelegramBotWebHook {
         this._open = true;
         return resolve();
       });
-
       this._webServer.once('error', (err) => {
         reject(err);
       });
@@ -73,7 +73,9 @@ class TelegramBotWebHook {
     }
     return new Promise((resolve, reject) => {
       this._webServer.close(error => {
-        if (error) return reject(error);
+        if (error) {
+          return reject(error);
+        }
         this._open = false;
         return resolve();
       });
@@ -93,7 +95,7 @@ class TelegramBotWebHook {
   }
 
   /**
-   * Handle error thrown during processing of webhook request.
+   * Handle error thrown during processing of a webhook request.
    * @private
    * @param  {Error} error
    */
@@ -105,21 +107,19 @@ class TelegramBotWebHook {
   }
 
   /**
-   * Handle request body by passing it to 'callback'
+   * Handle the request body by passing it to 'callback'
    * @private
    */
   _parseBody(error, body) {
     if (error) {
       return this._error(new errors.FatalError(error));
     }
-
     let data;
     try {
       data = JSON.parse(body.toString());
     } catch (parseError) {
       return this._error(new errors.ParseError(parseError.message));
     }
-
     return this.bot.processUpdate(data);
   }
 
@@ -132,7 +132,6 @@ class TelegramBotWebHook {
   _requestListener(req, res) {
     debug('WebHook request URL: %s', req.url);
     debug('WebHook request headers: %j', req.headers);
-
     if (req.url.indexOf(this.bot.token) !== -1) {
       if (req.method !== 'POST') {
         debug('WebHook request isn\'t a POST');
@@ -155,4 +154,4 @@ class TelegramBotWebHook {
   }
 }
 
-module.exports = TelegramBotWebHook;
+export default TelegramBotWebHook;

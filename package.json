@@ -26,14 +26,14 @@
   "author": "Yago Pérez <yagoperezs@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": ">=0.12"
+    "node": ">=21"
   },
   "dependencies": {
     "@cypress/request": "^3.0.8",
     "@cypress/request-promise": "^5.0.0",
     "array.prototype.findindex": "^2.0.2",
     "bl": "^1.2.3",
-    "debug": "^3.2.7",
+    "debug": "^4.4.1",
     "eventemitter3": "^3.0.0",
     "file-type": "^3.9.0",
     "mime": "^1.6.0",

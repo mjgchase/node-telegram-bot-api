@@ -1,4 +1,4 @@
-exports.BaseError = class BaseError extends Error {
+export class BaseError extends Error {
   /**
    * @class BaseError
    * @constructor
@@ -10,16 +10,16 @@ exports.BaseError = class BaseError extends Error {
     super(`${code}: ${message}`);
     this.code = code;
   }
+
   toJSON() {
     return {
       code: this.code,
       message: this.message,
     };
   }
-};
+}
 
-
-exports.FatalError = class FatalError extends exports.BaseError {
+export class FatalError extends BaseError {
   /**
    * Fatal Error. Error code is `"EFATAL"`.
    * @class FatalError
@@ -35,10 +35,9 @@ exports.FatalError = class FatalError extends exports.BaseError {
       this.cause = error;
     }
   }
-};
+}
 
-
-exports.ParseError = class ParseError extends exports.BaseError {
+export class ParseError extends BaseError {
   /**
    * Error during parsing. Error code is `"EPARSE"`.
    * @class ParseError
@@ -50,10 +49,9 @@ exports.ParseError = class ParseError extends exports.BaseError {
     super('EPARSE', message);
     this.response = response;
   }
-};
+}
 
-
-exports.TelegramError = class TelegramError extends exports.BaseError {
+export class TelegramError extends BaseError {
   /**
    * Error returned from Telegram. Error code is `"ETELEGRAM"`.
    * @class TelegramError
@@ -65,4 +63,4 @@ exports.TelegramError = class TelegramError extends exports.BaseError {
     super('ETELEGRAM', message);
     this.response = response;
   }
-};
+}

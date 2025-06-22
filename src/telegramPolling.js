@@ -1,8 +1,10 @@
-const errors = require('./errors');
-const debug = require('debug')('node-telegram-bot-api');
-const deprecate = require('./utils').deprecate;
-const ANOTHER_WEB_HOOK_USED = 409;
+import * as errors from './errors.js';
+import debugModule from 'debug';
+import { deprecate as deprecate$0 } from './utils.js';
 
+const debug = debugModule('node-telegram-bot-api');
+const deprecate = { deprecate: deprecate$0 }.deprecate;
+const ANOTHER_WEB_HOOK_USED = 409;
 
 class TelegramBotPolling {
   /**
@@ -199,4 +201,4 @@ class TelegramBotPolling {
   }
 }
 
-module.exports = TelegramBotPolling;
+export default TelegramBotPolling;
